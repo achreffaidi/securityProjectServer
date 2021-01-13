@@ -31,14 +31,17 @@ io.on('connection', socket => {
     //Get the chatID of the user and join in a room of the same chatID
     chatID = socket.handshake.query.chatID
     socket.join(chatID)
+    console.log("User connected :"+chatID)
 
     //Leave the room if the user closes the socket
     socket.on('disconnect', () => {
         socket.leave(chatID)
+        console.log("User disconnected :"+chatID)
     })
 
     //Send message to only a particular user
     socket.on('send_message', message => {
+        console.log("OnSent :"+message)
         receiverChatID = message.receiverChatID
         senderChatID = message.senderChatID
         content = message.content
